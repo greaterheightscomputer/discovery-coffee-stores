@@ -1,0 +1,1696 @@
+Nextjs 2022
+
+What is Next.js
+- Next.js -> it is a framework built on top of React that gives you the flexibilit of building scalable apps by allowing you to render content on the server in advance.
+- Next.js -> is a full-stack framework becos you can build both frontend and backend on nextjs. 
+- Next.js -> is a React Frame for Production.
+- Vanilla React is render on the client, their is no server but with Nextjs you can choose to render content from the client or server or mix of both. In nextjs you can choose to render one page from client side and render the second page from server side. 
+
+Benefits of Next.js 
+1. Different Rendering Techniques	 
+   	a. Static Site Generation -> all content is pre-build or pre-fetch on the server, and store 	in the cache, the client fetching the contents from the cache over and all again. This 	method of fetching data lead to huge perform. Its use for building static content
+	b. Server Side Rendering -> all content are server-up direct from server, each time you 	refresh the page the content will be server from server. Its use for building dynamic 	content
+	c. Incremental Site Regeneration -> the combination of static site generation + server side 	rendering.
+	Different rendering technique is also possible in vanilla Reactjs but you will need alot of 	setup and configuration setup but nextjs has make rendering technique much more easy.
+2. Performance
+   	a. Image Optimization-> instead of using image tag we will be using image component from 		nextjs, and this image component is responsive to any screen size. 
+	b. Code Spliting - dive your web app in small chunks so you can only load the chunk that is 		used by the current page. 
+	c. Minifying files - remove unecessary file inorder to reduce the size of files.
+	d. Pre-fetching assets - as user hover an image or link or page its fetch them from cache.
+3. File Based Routing - routing in nextjs comes out of the box or automatically. Any files and 		folders created in pages folder in a next project can be route automatic on the browser 		address bar like this demo.com/ or demo.com/api/hello, you don't need to install react-		router package or library. api folder in page folder hold all the server side logic of our 		project. Any files created in api folder is server side routing 
+4. SEO (Search Enginee Optimization)
+5. Serverless Functions - nextjs has the capacity to startup node server automatically once a 		request is made to any files in pages/api folder then process the user request and render it 	on the browser then automatic shutdown the node server again.
+
+node -- version 14.15.0
+npm --verision 8.7.0
+
+Create a Next.js app: Zero Config
+- open node terminal to create next app like this 
+C:\ComputerD>npx create-next-app@latest
+npx: installed 1 in 8.223s
+? What is your project named? » next-discover-coffee-store042022
+- change directory C:\ComputerD>cd next-discover-coffee-store042022
+- let startup nextjs in development server like this 
+C:\ComputerD\next-discover-coffee-store042022>npm run dev OR yarn dev
+- copy this local url http://localhost:3000 then past it on browser address bar
+- let open nextjs project in vscode like this
+C:\ComputerD\next-discover-coffee-store042022>code . 
+- open vscode terminal to run dev server like this
+C:\ComputerD\next-discover-coffee-store042022> npm run dev
+- click on this url: http://localhost:3000 
+
+Nextjs Documentation and Update 
+- go to this link https://nextjs.org/docs/upgrading to view how to upgrade from one version of nextj to another.
+- go to this link https://nextjs.org/blog/next-12-1 to view the new feature add to the new version on Nextjs
+
+Next.js setup project walkthrough
+- let go through all the files and folders create for us when we issue create-next-app command
+- package.json file -> to startup development and production server and to manage our app dependencies
+- pages folder -> its contain default routing. Once their is a react component file in pages folder nextjs will implicitly or automatic create a routing for the file based on its file name. We don't need react-router dependency to create anymore.
+* when you open pages folder you will see index.js which is the root route of http://localhost:3000/ and its contain the first content serverup when we run npm run dev. 
+* let create a new route called hello.js in page folder 
+* setup hell.js and call it like this on the browser address bar http://localhost:3000/hello
+- pages/_api.js -> entry point in our app. You can add a component that will be use thrughtout the app onto _api.js file like footer component.
+- pages/api folder -> it allow us to add our backend apis
+- public folder -> contain all static assets
+- styles folder-> its has the following files
+* globals.css -> will be applied throughout our application as a based style.
+* Home.module.css -> is a css module which is a css file that contain class names and animation names in local scope by default. Its compile to a low-level interchange format called ICSS or Interoperable CSS, but are written like normal CSS file.
+When importing the CSS Module from a JS Module, it exports an object with all mappings from local names to global names.
+
+What is Fast Refresh?
+Fast Refresh is a Next.js feature that gives you instantaneous feedback on edits made to your React components. Fast Refresh is enable by default in all Next.js applications on 9.4 or newer version. With Next.js Fast Refresh enable, most edits should be visible within a second without losing component state.
+
+What are CSS modules?
+- any css file that has .module.css is a css module. css module file is only scope to a component.
+- css module is class name are dynamically generate becos when do 
+ console.log('StylesHome', styles); in pages/index.js file 
+its append the dynamically generate string at the end of each class selector name like this
+StylesHome 
+Object: 
+	card: "Home_card___LpL1"  
+	code: "Home_code__suPER"
+	container: "Home_container__bCOhY"
+	description: "Home_description__41Owk"
+	footer: "Home_footer____T7K"
+	grid: "Home_grid__GxQ85"
+	logo: "Home_logo__27_tb"
+	main: "Home_main__nLjiQ"
+	title: "Home_title__T09hD"
+	[[Prototype]]: Object
+Home_card___LpL1" -> Home is css module file name, card is class selector name and LpL1 is the dynamically generated string. This dynamically generate string is unique that is why two ro more react component cannot use one css module.
+
+Let's get ready for Home Page 
+- open pages/index.js 
+* remove the content of main tags expect h1 tags then remove the content of h1
+* remove the footer tags 
+* open styles/Home.module.css to remove everything in the file expect .container, .main and everything relating to .title, 
+- replace the content of h1 with <h1 className={styles.title}>Coffee Connoisseur</h1>
+then view it on the browser.
+
+App background
+- go to meshgradient.com, click on Mesh | Create beautiful mesh gradients
+* click on view gallery icon to create gradient then click on Export button to use it in your project
+* create static folder in public
+* copy the downloaded mesh-gradient.png rename to background.png and past it onto public/static folder
+* use the background.png in styles/globals.css in body element selector
+* let checkout on the browser
+
+Banner Component
+- create components folder in the root folder 
+- create banner.js file in components folder
+- let setup banner.js 
+- user Banner component in main tags of index.js file
+- import Banner from '../components/banner'; onto pages/index.js file
+
+Mobile first development means when styling a component, style mobile view first, then tablet view, desktop and other view port by going to css-tricks.com/
+- create css variable like this color: var(--text-white-100); for the purpose of reusability 
+- open pages/_api.js file to see the import '../styles/globals.css'; this will make this globals.css file avaliable throughtout our app.
+- open globals.css file to add these css variable like this 
+:root {
+  --text-purple: rgba(67, 56, 202, 1);
+  --text-purple-dark: rgba(79, 70, 229, 1);
+  --text-black: rgba(17, 24, 39, 1);
+  --text-white-100: rgba(229, 231, 235, 1);
+} 
+- add styling onto Banner component by creating banner.module.css file in components folder  
+
+Next.js Head Component
+- open pages/index.js then change in the in-built next Head component for the purpose of SEO from this 
+<Head>
+     <title>Create Next App</title>
+     <meta name="description" content="Generated by create next app" />
+     <link rel="icon" href="/favicon.ico" />
+</Head>
+to this
+<Head>
+     <title>Coffee Connoisseur</title>
+     <meta name="description" content="Generated by create next app" />
+     <link rel="icon" href="/favicon.ico" />
+</Head>
+
+Routing in Next.js 
+- Routing means anytime you type on the browser address bar we want that specific page to load.
+- Next.js uses file based routing which means anytime you create file in pages folder its automatically add route to the component created.
+- 2 Rules Routing creation in Next.js 
+a. The page needs to be a React component
+b. Component needs to be exported by default.
+Type of Routing in Next.js
+1. index routes -> its refer to index.js in pages folder
+2. nested routes -> is the files created in pages folder such as /coffee-store.js
+3. dynamic routes -> define brackets /coffee-store/[id]
+- create a nested route coffee-store.js in pages folder 
+then enter this url http://localhost:3000/coffee-store this is an example of nested route
+- to create dynamic route create a coffee-store in pages with 
+- move coffee-store.js file onto in pages/coffee-store folder
+- rename coffee-store.js to [id].js which mean using box bracket syntax 
+go to the browser address bar to add this url http://localhost:3000/coffee-store/233333
+23333 is the value that is store in id which make the url a dynamic routing 
+- add useRouter() react hook method to read the value query string in url from the browser like this
+const router = useRouter();
+console.log('router: ', router);
+
+Add route using Link component 
+Link are use to connect different pages together in an app.
+Two Type of Linking Pages
+1. Non-dynamic/known page -> linking to already known route or page
+2. Dynamic pages -> linking to dynamic generated route or page
+- Example of non-dynamic link is this
+<Link href="/">Back to home</Link>
+- Example of dynamic link is this
+<Link href="/coffee-store/32343434">Go to page dynamic</Link>
+
+Style our homepage
+- open styles/global.css to add more styling onto base style or global.css file
+- open Home.module.css file to remove and class selector then update with new onces.
+
+Image Generator
+- download tranparent coffee image 
+- copy it onto pulic/static folder and use it in the index.js file right after Banner component in main tags
+- Home.module.css to add class selector for styling images
+
+Setup fonts in Nextjs
+- go to fonts.google.com
+- search for IBM Plex Sans 
+- double click on IBM Plex Sans and click on Download family button
+- unzip IBM_Plex_Sans folder then copy IBMPlexSans-Bold, IBMPlexSans-Regular and 
+IBMPlexSans-SemiBold
+- create fonts folder in public folder and move all the selected fonts onto public/fonts folder
+
+Load fonts on the page
+- create _document.js file in pages folder inorder to have direct access to html head tags as a result we shoult use _document.js file to load fonts for all our app pages. Pages/_app.js file has direct access to html body tags.
+- setup pages/_document.js with class based react component then extends Document class.
+- open browser Element tab, the <Main></Main> component in _document.js file is responsible for add id="__next" in the root div tags of the body in Elements tab inside the browser Element and <NextScript /> component is responsible for all the script tags in browser Elements tab so that next.js can work in the background.
+- anytime we make changes in _document.js and _app.js file we need to restart the dev server.
+- let load the fonts onto the <Head> tags of /pages/_document.js file like this
+<Head>
+  <link
+     rel="preload" 
+     href="/fonts/IBMPlexSans-Bold.tts"
+     as="font"
+     crossOrigin="anonymous"
+   ></link>
+ </Head>
+* rel ="preload" means rel -> relationship, preload -> tells browser to load the resource in advance
+* href="/fonts/IBMPlexSans-Bold.tts" means-> this is the resource font in this case located in public/fontes folder
+*  as="font" means only used when rel="preload". It sets the necessary font on the header
+* crossOrigin="anonymous" means no credentials needed.
+- open styles/globals.css to set IBMPlexSans as the base fonts 
+- open browser Elements tab, click on <head></head> tags to view all the fonts loaded onto <Head></Head> tags of pages/_document.js file.
+- click on browser Network tab, type fonts on filter input field to view all the fonts downloaded onto the Network tab. 
+- Next.js also have Font Optimization feature which will load the fonts once and eliminating an extra round trip to fetch the font declare.
+
+What is SEO?
+SEO (Search Engine Optimization)
+	        |
+_________________________________________________
+|		|		   |            |
+Crawing	      Indexing	    Google database    Ranking	
+
+* Crawing -> find what pages exists or discover page
+* Indexing -> Once discovered. Google tries to understand the content of the page by using html.
+By checking the following on the site;
+1. <title> tags, <meta description> in the <head> tags of html page. The website that have html head title and description meta tags will be on the first page of google search. Whenever you google search a site the first line of search result is html head title tags and second line of your google search is html description meta tags. 
+2. It also check for image tags with alt attribute. 
+* Google database -> Once the indexing have being made google stores analysis in the db
+Google allocate mark to all sites by using these following techniques and more
+a. Click through rate -> how many time user click on a page
+b. Bounce rate -> how many time user click back button on the browser
+c. Dwell time -> how man time user spend on a site
+* Ranking -> serves highly ranked page based on users location, language and device.
+
+Pre-rendering 
+- by default Next.js pre-rendering all page. 
+- Meaning of pre-rendering - server is responsible for rendering content and all js content are convert to html page in advance in nextjs. While in plain React App javaScript or client side is responsible for rendering the content in DOM js format which take time to render on the browser.
+- Hydration - means when user interact with pages on the browser.
+
+Plain React Vs Next.js app in Pre-rendering
+Next.js render html format content in advance while plain React render javascript format  content at run-time.
+
+Different Rendering Techniques in Nextjs
+1. Static Site Generation (SSG)
+2. Incremental Site Regeneration (ISR)
+3. Server-Side Rendering (SSR)
+1. SSG -> HTML is generated at Build time. At build time means html is generate when you are building your app for production, when run next build command is executed. getStaticProps method is used in SSG.
+2. ISR -> HTML is generated at a specific interval e.g 60 seconds. getStaticProps  method with revalidate property.
+3. SSR -> new HTML is generated for every user request. getServersideProps method. SSR is slower becos the HTML get generated for every user request, its does not pre-fetch the content. Its use in case of highly dynamic content.
+
+How Pre-rendering helps with performance 
+git push  -->  App build starts (npm next build)  -->  App build completed (Files + HTML generated) -->  Generated files are uploaded to a CDN
+
+Project Component Architecture
+			---------------------
+			|  Banner and Image |
+			---------------------
+
+   Heading
+	--------	---------	---------
+	| Card |	| Card	|	| Card  |
+	--------	---------	---------
+
+   Heading
+	--------	---------	---------
+	| Card |	| Card	|	| Card  |
+	--------	---------	---------
+
+Building Card Component Structure
+- create card.js component and card.module.css in components folder
+- setup card.js component 
+- import Card from '../components/card'; onto pages/index.js file for use
+- use card component right after image component in index.js
+- let statically pass props onto Card component in index.js file like this 
+   <Card
+  	name="DarkHorse Coffee"
+        imgUrl="/static/Coffee-Beans.png"
+        href="/coffee-store/darkhorse-coffee"
+     />
+- let use the props pass onto Card component in card.js file 
+- setup card.module.css for styling Card component
+- go to glassmorphism.com is a css generator site inorder to add glass transparent to background
+
+Card Component Styling
+- import styles from './card.module.css'; onto card.module.css file
+- let add the glassmorphism css code in a file where more components can use the css style and that file should be globals.css file
+- install classnames for combining both regular css and module.css to style a component like this
+ C:\ComputerD\next-discover-coffee-store042022> npm i classnames@2.3.1
+- import cls from 'classnames'; onto Card component for use like this 
+<di className={cls('glass', styles.container)}>
+
+Grid Layout for Card component
+- open index.js file to add a div tags over Card component with styles.cardLayout class selector
+- add styles.card class selector onto Card component
+- open styles/Home.module.css file to add .cardLayout and .card right before the @media query 
+- back to index.js file copy and past Card component
+- let use .cardLayout class selector in all the @media query breakpoint and change the number on the grid-template-columns as well.
+
+Coffee Stores data
+- get coffee stores data by dummy coffee-stores.json data by downloading it.
+- create data folder in the root folder and move coffee-stores.json file onto data folder
+- import coffeeStore from '../data/coffee-stores.json'; onto pages/index.js file for use
+- use the coffee-stores.json array of object on Card component in index.js file
+- let checkout the app on the browser 
+- it trigger the below error
+Server Error
+Error: Invalid src prop (https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80) on `next/image`, hostname "images.unsplash.com" is not configured under images in your `next.config.js`
+See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
+- to fixed the error do the following 
+* open next.config.js file 
+* add this configuration setup onto next.config.js like this
+images: {
+    domains: ['images.unsplash.com'],
+  },
+the above indicate the source of our images.
+- let restart the dev server like this to view the changes
+C:\ComputerD\next-discover-coffee-store042022> npm run dev
+
+Which Pre-render technique will be use in Coffee Connoisseur App
+- Static Stie Generation (SSG) technique will be use, this will allow our content to be store and  served from cache in advance.
+
+Default Pre-rendering in Next.js 
+- the default pre-rendering in next.js is when their is no external data in our app such as no external api call from server, nextjs will pre-render our app by default pre-rendering.
+- if our app is making a call to an external api function we do need to implement a special function  called getStaticProps() function.
+if you export an 'async' function called 'getStaticProps' from a page, Next.js will pre-render this page at build time using the props returned by 'getStaticProps'.
+- getStaticProps function is getting the static data as a props in a component.
+
+Rules of getStaticProps() function
+1. can only be exported from a page file
+2. its meant for all routes
+
+- using getStaticProps() function in pages/index.js 
+export async function getStaticProps(context) {
+  return {
+    props: {
+      coffeeStores, //pass this coffeeStores data onto component as props
+    },
+  };
+}
+in the above async function we passed coffeeStores as a property of props object
+- let get coffeeStores from getStaticProps() like this
+{props.coffeeStores.map((coffeeStore) => {
+in place of  
+{coffeeStores.map((coffeeStore) => {
+
+Characteristics of Get Static Props in Next.js 
+1. getStaticProps only runs at build time.
+2. getStaticProps only runs on server side.
+3. getStaticProps won't be included in client bundle - any code you see in the browser Network tab is the client side code or client bundle
+- go to next-code-elimination.vercel.app website, the site is build by vercel. The site will enable us to view the codes that will be in our client side code. Client side code are codes that are on browser Network tab.
+- let copy the codes in pages/index.js file onto next-code-elimination.vercel.app website, you will see that the getStaticProps() is not in the client side code which means that getStaticProps() is essentially called on the server and this make it secure beco's non of the users can access the code and view it as well.
+4. getStaticProps runs on both dev server and server side
+- inside pages/index.js file we have both client side code and server sider code
+- the codes in export default function Home(props) {} is client side codes and the codes in export async function getStaticProps(context) {} is server side codes
+
+Coffee Stores Heading
+- dynamically render the coffee stores in Toronto like this
+{coffeeStores.length > 0 && (
+          <div>
+            <h2 className={styles.heading}>Toronto Stores</h2>
+            <div className={styles.cardLayout}>
+              {props.coffeeStores.map((coffeeStore) => {
+                return (
+                  <Card
+                    key={coffeeStore.id}
+                    name={coffeeStore.name}
+                    imgUrl={coffeeStore.imgUrl}
+                    href={`/coffee-store/${coffeeStore.id}`}
+                    className={styles.card}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )}
+which means once their is a data in coffeeStores array of object add Toronto as the heading
+- open styles/Home.module.css file to add styling onto Toronto with heading2 class selector.
+
+Get Static Paths in Next.js
+- getStaticPaths() function is use on dynamic routes. Its allow us to define a list of paths that have to be rendered to HTML at build time. getStaticPaths() function expose all the ids or any dynamic properties to next.js.
+- As the name implement getStaticPaths literally means give me the static paths. 
+
+getStaticPaths Rules
+1. getStaticPaths can only be exported from a page file
+2. getStaticPaths meant for dynamic routes
+3. getStaticPaths page must also implement getStaticProps() function
+
+Characteristics of getStaticPaths
+1. getStaticPaths only runs at build time
+2. getStaticPaths  only runs on server side
+3. getStaticPaths won't be included in client bundle
+4. getStaticPaths runs on both dev server and server side
+
+Implement Get Static Props and Get Static Paths in Next.js
+- open pages/coffee-store/[id].js file to implement both getStaticProps and getStaticPaths functions
+
+Fallback in Next.js
+fallback: false -> means return 404 page if route does not exist in getStaticPaths 
+fallback: true -> next.js we not return an 404, its go and fetch the page from the server, if not found its will throw an error otherwise the 1st user will see how the page get load from the server but after that the page will be store in cache for subsequent users to easily gain access to it.
+router.isFallback is use to check if a route is true exist.
+
+Refactor Coffee Store Page
+- replace this getStaticPaths function 
+export function getStaticPaths() {
+  return {
+    paths: [
+      { params: { id: '0' } },
+      { params: { id: '1' } },
+      { params: { id: '300' } },
+    ],
+    fallback: true,
+  };
+}
+with this
+export function getStaticPaths() {
+  const paths = coffeeStores.map((coffeeStore) => {
+    return {
+      params: {
+        id: coffeeStore.id.toString(),
+      },
+    };
+  });
+
+  return {
+    paths,
+    fallback: true,
+  };
+}
+
+Coffee Store Page Styling 
+- create coffee-store.module.css file in styles folder for styling coffee-store/[id].js
+- import styles from '../../styles/coffee-store.module.css'; onto coffee-store/[id].js file
+- import cls from 'classnames'; onto coffee-store/[id].js file 
+- download icons by going to fonts.google.com/icons
+* write the name of icon in the search box then download the icon in either SVG or PNG format
+* type near me in the search box then click to download in svg format
+* type place in the search box then click to download in svg format
+- create icons folder inside static folder and the following files inside static/icons folder
+* create nearMe.svg file then past near me svg inside the file
+* create star.svg file then past start svg inside it
+- create places.svg file then past places svg inside it.
+- use the svg files in [id].js file on the Image component in the return section
+- let copy the and past the remaining style inside styles/coffee-store.module.css
+
+Setup Foursquare Account
+- Foursquare - is a website that provide the apis for location such as coffee-store places.
+- every users will $200 worth of credits on the 1st of every month to make api calls to their website once the user exhaust it befre the end of the month you will start using your credit card.
+- go to https://foursquare.com/developers/signup to create Account
+- after creating the account you will be redirected to https://foursquare.com/developers/home
+* click on Create New Project button
+* Project Name: discover-coffee-stores and click Create Button
+
+Foursquare Places API
+- go to https://developer.foursquare.com/docs you will find Places api with other services provided by Foursquare
+- go to this url -> https://developer.foursquare.com/reference/place-search to view the Query Params that you will pass to your api request.
+- go to this url -> https://foursquare.com/developers/explore#req=users%2Fself to input your latitude and longititude of the place you are search for.
+- google search https://www.google.com/maps/place inorder to copy the latitude and longitute of any place on the map
+- right click on any place on the google maps to copy the lat-lng and go back to  
+https://foursquare.com/developers/explore and past the copied lat-lng in the input field of 
+https://api.foursquare.com/v2/: venues/search?ll=6.455473914307405, 3.3953636469130006
+- to specify the places you are search for, then add more query string parameter like this
+venues/search?ll=6.425111018653891, 3.3618896805939342&query=coffee stores then click on view button
+
+Generate API Key by click on Generate Additional Api key
+- API Key Nickname: coffee-stores052022 and click on Next button
+- copy API Key: fsq3fcQz2lk/7LskOPdFr+OCA50KH3HnOYQ3mUQlB7OI4RE=
+
+Generate API Key for Hameedah 
+fsq3Kv9L0FtscscNu2491KgYhbS0DYyRPWJSOT7AzhtAz2k=
+
+- open Postman to test the foursquare places api 
+* select GET https method 
+* past the url onto the input field like https://api.foursquare.com/v3/places/nearby?query=coffee&ll=6.425111018653891,3.3618896805939342
+* click on the Headers tab then past 
+KEY: Authorization 	 VALUE: fsq3fcQz2lk/7LskOPdFr+OCA50KH3HnOYQ3mUQlB7OI4RE=
+
+Let view the endpoint we want to fetch from Foursquare website in our app browser console, then 
+add the Generated API key onto the headers object of fetch api method
+
+fetch(
+    'https://api.foursquare.com/v3/places/nearby?query=coffee&ll=6.425111018653891,3.3618896805939342',
+    {
+      headers: {
+        Authorization: 'fsq3fcQz2lk/7LskOPdFr+OCA50KH3HnOYQ3mUQlB7OI4RE=',
+        // Authorization: 'fsq3Kv9L0FtscscNu2491KgYhbS0DYyRPWJSOT7AzhtAz2k=', //hameedah
+      },
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+
+Foursquare API in Get Static Props
+- Using Foursquare Place Api inside getStaticProps function by copying foursquare api from console onto getStaticProps method
+- open pages/index.js file  
+export async function getStaticProps(context) {
+  console.log('Hi getStaticProps'); //print on the dev server in vscode
+
+fetch(
+    'https://api.foursquare.com/v3/places/nearby?query=coffee&ll=6.425111018653891,3.3618896805939342',
+    {
+      headers: {
+        Authorization: 'fsq3fcQz2lk/7LskOPdFr+OCA50KH3HnOYQ3mUQlB7OI4RE=',
+        // Authorization: 'fsq3Kv9L0FtscscNu2491KgYhbS0DYyRPWJSOT7AzhtAz2k=', //hameedah
+      },
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+
+  return {
+    props: {
+      coffeeStores, //pass this coffeeStores data onto component as props
+    },
+  };
+}
+- view the api data on the vscode terminal console becos the block of code is from backend.
+
+Convert Fetch API to Async Await
+- Convert fetch()api to Async Await inorder to access the response easily
+const response = await fetch(
+    'https://api.foursquare.com/v3/places/nearby?query=coffee&ll=6.425111018653891,3.3618896805939342',
+    {
+      headers: {
+        Authorization: 'fsq3fcQz2lk/7LskOPdFr+OCA50KH3HnOYQ3mUQlB7OI4RE=',
+        // Authorization: 'fsq3Kv9L0FtscscNu2491KgYhbS0DYyRPWJSOT7AzhtAz2k=', //hameedah
+      },
+    }
+  );
+  const data = await response.json();
+  console.log('dataFSQ: ', data.results);
+- replace the dummy coffee-stores data with dynamic data from Foursquare api inorder to view the dynamic stores on the browser like this 
+return {
+    props: {
+      coffeeStores: data.results, //pass this coffeeStores data onto component as props
+    },
+  }; 
+in the getStaticProps() method
+- comment import coffeeStores from '../data/coffee-stores.json';
+- checkout the result on the browser, it throw this error
+Error: Image is missing required "src" property. Make sure you pass "src" in props to the `next/image` component. Received: {"width":260,"height":160}
+- let make sure that the values that we are getting from the dynamic data, Foursquare api match with the value on our Card component which are 
+<Card
+   key={coffeeStore.fsq_id}
+   name={coffeeStore.name}
+   imgUrl={coffeeStore.imgUrl}
+   href={`/coffee-store/${coffeeStore.fsq_id}`}
+   className={styles.card}
+/>
+when you go throught the data.results properties imgUrl property is not part of the data return by the external api 
+- to solve the above issue, open data/coffee-stores.js dummy coffee-stores and copy one imgUrl property value like this 
+"https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+then past it onto imgUrl props in the Card component like this
+imgUrl={coffeeStore.imgUrl ||
+        'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80'}
+- the above means if coffeeStore.imgUrl is not available then use image url fron unsplash.com
+- let refresh the browser to view the dynamic coffee-stores from Foursquare api
+- let add limit query string params on the fetch api for coffee-stores in Lagos like this
+'https://api.foursquare.com/v3/places/nearby?query=coffee stores&ll=6.523999122374296,3.3772545789333024&limit=6',
+- it means display or render 6 coffee stores at once on the screen. 
+
+Coffee Stores Library
+- create lib folder in the root folder
+- create coffee-stores.js file inside lib folder
+- cut fetch api of Foursquare places api to lib/coffee-stores.js file for reusable purpose like this 
+const response = await fetch(
+  'https://api.foursquare.com/v3/places/nearby?query=coffee stores&ll=6.523999122374296,3.3772545789333024&limit=6',
+  {
+    headers: {
+      Authorization: 'fsq3fcQz2lk/7LskOPdFr+OCA50KH3HnOYQ3mUQlB7OI4RE=',
+      //   Authorization: 'fsq3Kv9L0FtscscNu2491KgYhbS0DYyRPWJSOT7AzhtAz2k=', //hameedah
+    },
+  }
+);
+const data = await response.json();
+console.log('dataFSQ: ', data.results);
+
+- convert fetch api block of codes to function like this
+export const fetchCoffeeStores = async () => {
+    const response = await fetch(
+        'https://api.foursquare.com/v3/places/nearby?query=coffee stores&ll=6.523999122374296,3.3772545789333024&limit=6',
+      {
+        headers: {
+          // Authorization: 'fsq3fcQz2lk/7LskOPdFr+OCA50KH3HnOYQ3mUQlB7OI4RE=',
+          Authorization: 'fsq3Kv9L0FtscscNu2491KgYhbS0DYyRPWJSOT7AzhtAz2k=', //hameedah
+        },
+      }
+    );
+    const data = await response.json();
+    console.log('dataFSQ: ', data.results);
+    return data.results;
+};
+
+- import { fetchCoffeeStores } from './lib/coffee-stores'; onto pages/index.js file
+- use fetchCoffeeStores function inside getStaticProps function right before return {} like this
+const coffeeStores = await fetchCoffeeStores();
+
+  return {
+    props: {
+      coffeeStores, //pass this coffeeStores data onto component as props
+    },
+  };
+
+- passing dynamic latLong, query, and limit as an argument onto foursquare api
+const getUrlForCoffeeStores = (latLong, query, limit) => {
+  return `https://api.foursquare.com/v3/places/nearby?ll=${latLong}&query=${query}&limit=${limit}`;
+};
+
+export const fetchCoffeeStores = async () => {
+  const response = await fetch(
+    getUrlForCoffeeStores(
+      '6.523999122374296,3.3772545789333024',
+      'coffee stores',
+      6
+    ),
+    {
+      headers: {
+        // Authorization: 'fsq3fcQz2lk/7LskOPdFr+OCA50KH3HnOYQ3mUQlB7OI4RE=',
+        Authorization: 'fsq3Kv9L0FtscscNu2491KgYhbS0DYyRPWJSOT7AzhtAz2k=', //hameedah
+      },
+    }
+  );
+  const data = await response.json();
+  console.log('dataFSQ: ', data.results);
+  return data.results;
+};
+
+Update getStaticProps() and getStaticPath() method in pages/coffee-store/[id].js with Foursquare Place Api
+- click on any of the coffee-store in the browser its throws an error
+Server Error
+TypeError: Cannot destructure property 'name' of 'props.coffeeStore' as it is undefined
+- it is throwing the above becos getStaticProps() and getStaticPaths() methods in [id].js file is still receiving data from dummy data and not from Foursquare place Api
+- Using dynamic api data from Foursquare Place Api inplace of dummy data
+- inside index.js file change this href={`/coffee-store/${coffeeStore.id}`} to this 
+href={`/coffee-store/${coffeeStore.fsq_id}`}
+- remove import coffeeStores from '../../data/coffee-stores.json'; on [id].js file
+- add const coffeeStores = await fetchCoffeeStores(); onto getStaticProps() and getStaticPaths() methods in [id].js
+- import { fetchCoffeeStores } from '../lib/coffee-stores'; onto [id].js file
+- change this return coffeeStore.id === params.id; to return coffeeStore.fsq_id === params.id; on getStaticProps() method
+- change this return {
+      params: {
+        id: coffeeStore.id,
+      },
+    };
+to this 
+return {
+      params: {
+        id: coffeeStore.fsq_id,
+      },
+    }; 
+on getStaticPaths() method
+- its return this error on [id].js file
+Server Error
+Error: Image is missing required "src" property. Make sure you pass "src" in props to the `next/image` component. Received: {"width":600,"height":360}
+- to fix the above problem change the Image component [id].js file from this 
+  <Image
+     src={imgUrl}
+     alt={name}
+     width={600}
+     height={360}
+     className={styles.storeImg}
+ />
+to this
+ <Image
+   src={imgUrl ||
+       'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80'
+        }
+       alt={name}
+       width={600}
+       height={360}
+       className={styles.storeImg}
+ />
+
+Re-structuring Data for proper accessment
+- when the content of [id].js render, there are some miss data
+- open [id].js to change the structure of access our data from Foursquare Places Api from this
+const { name, address, neighbourhood, imgUrl } = props.coffeeStore;
+to this 
+const { name, location, imgUrl } = props.coffeeStore;
+- change the address and neighbourhood fields from this 
+ <p className={styles.text}>{address}</p>
+ <p className={styles.text}>{neighbourhood}</p>
+to these
+ <p className={styles.text}>{location.address}</p>
+- dynamically render location.formatted_address and location.locality field, using javascript express. If they exist render them otherwise don't render the field(s)
+
+Setup Unsplash API
+- Unsplash api is an images api inorder to have different images on the different coffee-store we have.
+- We are not using Foursquare api becos we are using free version of foursquare or soundbox as a result we don't have access to images on Foursquare api.
+- let go to unsplash.com website
+- type coffee stores in the search box input field
+- click on Sign up 
+- click on the hanburger button then click on Developers/API
+- right click on Your apps button to view the Developer dashbard 
+- click on New Application
+- check all the Terms and condition given to us by Unsplash then click on Accept terms button
+* Application name: coffee-stores
+* Description: Building an app for coffee stores near us
+click Create application button 
+* its redirect us to Developer Dashboard 
+- go back to https://unsplash.com/developers, click on View the documentation button inorder to view the api we are going to use.
+* we shall be using Search photos by keyword API
+- click on Search photos by keyword 
+- its show the api we need to invoke which is GET /search/photos + other string query parameters
+- click on Libraries & SDKs on the sidebar 
+- click on Javascript (unsplash/unsplash-js), its redirect us to GitHub repository inorder to view how to install unsplash-js as a dependency and it usage
+- C:\ComputerD\next-discover-coffee-store042022> npm i --save unsplash-js
+
+Integrate Unsplash Api with Coffee Store Image
+- open pages/lib/coffee-stores.js for the purpose of integrate unsplash api 
+- let go back to github.com/unsplash/unsplash-js to view how to use unsplash api
+- scroll down to Creating an instance usage then copy the node server usage like this 
+import { createApi } from 'unsplash-js';
+
+// on your node server
+const serverApi = createApi({
+  accessKey: 'MY_ACCESS_KEY',
+  //...other fetch options
+});
+- then past it in the pages/lib/coffee-stores.js file
+- import { createApi } from 'unsplash-js'; onto pages/lib/coffee-stores.js file
+- rename serverApi to unsplashApi
+- let copy the access key from https://unsplash.com/oauth/applications/326931 then past it in .env file for usage 
+- let go back to github.com/unsplash/unsplash-js, scroll up to Documentation selection then click on  Instance Methods. 
+- Instance methods give us all the methods and arguments we can use in unsplash apis, these are all the methods and each method have different arguments
+* Search
+* Photos
+* Users
+* Collections
+* Topics
+- click on See endpoint docs to see the meaning of each argument 
+- copy the example method
+unsplash.search.getPhotos({
+  query: 'cat',
+  page: 1,
+  perPage: 10,
+  color: 'green',
+  orientation: 'portrait',
+});
+- past the unsplash method right inside fetchCoffeeStores function in pages/lib/coffee-stores.js file 
+- rename unsplash.search.getPhotos() to unsplashApi.search.getPhotos()
+- add unsplash block of into a function called getListOfCoffeeStorePhotos() outside fetchCoffeeStores()
+- use getListOfCoffeeStorePhotos() in fetchCoffeeStores function like this 
+ const photos = await getListOfCoffeeStorePhotos();
+- let add images from unsplash api with the Foursquare Place api by change the return object of fetchCoffeeStores() from this 
+return data.results
+to this
+return data.results.map((result, id) => {
+    return {
+      ...result,
+      imgUrl: photos[id],
+    };
+  });
+- let do console.log of coffeeStores inside getStaticProps() method of index.js file inorder to view how the imgUrl has being include inside Foursquare place api inside vscode terminal like this
+ const coffeeStores = await fetchCoffeeStores();
+ console.log('indexCoffeeStores: ', coffeeStores);
+- let view the output in the browser
+
+Update Styling for the App
+- add arrow icon beside Back to home like this 
+	<Image
+           src="/static/icons/arrow.svg"
+           width="15"
+           height="15"
+           alt=""
+             />
+
+Geolocation API Docs
+Geolocation API is an api to location use location by using Longitude and Latitude on the map.
+- google search https://developer.mozilla.org/en-US/
+- click on Web APIs, scroll down to click on Geolocation API
+- scroll down to see Examples on how to use Geolocation API 
+- click on See Using the Geolocation API for example code.
+- scroll down to see HTML and JavaScript code example click on Show my location button then it return your location based on Latitude and Longitude like this 
+Latitude: 6.4351 °, Longitude: 3.416 °
+
+Create React Hook for Retrieving User Location
+- create hooks folder in the root folder
+- create user-track-location.js file in hooks folder inorder to get the langitude and latitude of the user.
+- setup user-track-location.js file by going to 
+https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API/Using_the_Geolocation_API#examples to copy codes
+- let use useTrackLocation inside index.js file 
+- import UserTrackLocation from '../hooks/user-track-location'; onto index.js file
+- destructure UserTrackLocation component right inside Home component of pages/index.js file
+- use handleTrackLocation() function inside handleOnBannerBtnClick() function like this 
+const handleOnBannerBtnClick = () => {
+    // console.log('Hi banner button');
+    handleTrackLocation();
+  };
+- test the above function by click on View stores nearby button.
+- click on the location icon on the browser address bar to block access to your location, this will trigger error, 'Unable to retrieve your location'
+- use isFindingLocation on Banner component to dynamically render the View stores nearby button like this 
+<Banner
+   buttonText={isFindingLocation ? 'Locating...' : 'View stores nearby'}
+   handleOnClick={handleOnBannerBtnClick}
+/>
+- for us to see the dynamic rendering of the button click on View site information icon on the browser address bar, click on the Location dropdown box to select Ask (default)
+- click on View stores nearby to see the dynamic rendering of the button
+- let use locationErrorMsg right after Banner component on the index.js file like this
+{locationErrorMsg && <p>Something went wrong:{locationErrorMsg}</p>}
+
+Client Side Rendering (CSR) Coffee Stores
+- pass in latLong argument onto fetchCoffeeStores() function to dynamically render coffee store from other latitude and longitude.
+- checkout the result on the browser to make sure that Lagos Coffee Stores still render.
+- add useEffect react method right after destructuring UserTrackLocation() function in index.js file like this
+  useEffect(() => {
+    const fetchData = async () => {
+      if (latLong) {
+        try {
+          const fetchedCoffeeStore = await fetchCoffeeStores(latLong, 30);
+          console.log('fetchedCoffeeStore: ', fetchedCoffeeStore);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    };
+    fetchData();
+  }, [latLong]);
+- the above useEffect() method render this on the browser console
+fetchedCoffeeStore:  (30) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+- Display Coffee Stores by Location on the index.js Page instead of the browser console
+- create const [coffeeStores, setCoffeeStores] = useState(''); inside Home component to store the fetch api data inorder to render the data on the browser.
+- store the fetch fetchedCoffee from api in setCoffeeStores() like this
+  const fetchedCoffee = await fetchCoffeeStores(latLong, 30);
+  console.log('fetchedCoffee: ', fetchedCoffee);
+  setCoffeeStores(fetchedCoffee);
+- copy the Card component of Home component in the index.js file and past it above Lagos Coffee Stores
+- inside Store near me code change {props.coffeeStores.length > 0 && () to {coffeeStores.length > 0 && (
+- change {props.coffeeStores.map((coffeeStore) => {}) to {coffeeStores.map((coffeeStore) => {})
+- add const [coffeeStoresError, setCoffeeStoresError] = useState(null); onto the Home component in the index.js file inorder to handle any error when rendering data.
+- use setCoffeeStoresError() function in side catch block of the useEffect() method in Home component of index.js
+- use coffeeStoresError variable right after Banner component inside the Home component like this
+{coffeeStoresError && <p>Something went wrong:{coffeeStoresError}</p>}
+
+Refresh the Dynamic Route (Non-static)
+- when click on any coffee stores in Lagos Coffee Stores it redirect us to the individual page of the coffee store but when click on any of the coffee stores near me the store that is already on the Lagos coffee stores its will still redirect you to the coffee store individual page but when click on any coffee stores that is not part of the 6 coffee stores it will throw error becos their id is not in getStaticPath() method.
+
+Fallback in Next.js
+- when fallback is like this
+fallback: false, --> means return 404 when a page is not found
+- when is like this
+fallback: true, --> means fetch the page from the server then render otherwise return error but not 404 error.
+
+Use React Context and Why to Use Context?
+- Context is a global store where data can be pass to component tree without having to pass props down manually at every level.
+- we shall store the latLong (latitude and longitude) and the coffee stores in the context store inorder to preserved latLong and coffee stores generated when click on View stores nearby button.
+
+Create Store Context
+- create store folder in the root folder
+- create store-context.js file in store folder
+- setup context store inside store-context file like this 
+const StoreContext = createContext();
+
+const StoreProvider = ({ children }) => {
+  const initialState = {
+    latLong: '',
+    coffeeStores: [],
+  };
+  return (
+    <StoreContext.Provider value={{ state: initialState }}>
+      {children}
+    </StoreContext.Provider>
+  );
+};
+- import StoreProvider from '../store/store-context'; onto _api.js file
+- wrap the StoreProvider function around all our app component inorder to make it available for any component that need data like this 
+function MyApp({ Component, pageProps }) {
+  return (
+    <div>
+      <StoreProvider>
+        <Component {...pageProps} />
+      </StoreProvider>
+    </div>
+  );
+}
+- let checkout the context store on the browser Components tab  by clicking on MyApp, click on Context.Provider to see the initial value pass to state like this 
+state:{coffeeStores: Array(0), latLong: ""}
+
+Create Store Reducer in Context
+Reducer is an alternative to useState(). Reducer is use when you have a complex state logic that involves multiple sub-values or when the next state depends on the previous one.
+- create Action types right before StoreProvider() function inside pages/_api like this 
+export const ACTION_TYPES = {
+  SET_LAT_LONG: 'SET_LAT_LONG',
+  SET_COFFEE_STORES: 'SET_COFFEE_STORES',
+};
+- create storeReducer inside pages/_api.js like this
+const storeReducer = (state, action) => {
+  switch (action.type) {
+    case ACTION_TYPES.SET_LAT_LONG: {
+      return { ...state, latLong: action.payload.latLong };
+    }
+    case ACTION_TYPES.SET_COFFEE_STORES: {
+      return { ...state, coffeeStores: action.payload.coffeeStores };
+    }
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`);
+  }
+};
+- use the create reducer in StoreProvider function like this 
+const [state, dispatch] = useReducer(storeReducer, initialState)
+
+Store Coffee Stores in Context Store
+- open hooks/user-track-location.js file inorder to store value on latLong variable use context store in stead of useState() react method.
+- comment the following inside UserTrackLocation function
+* const [latLong, setLatLong] = useState('');
+* setLatLong(`${latitude},${longitude}`); inside success function
+* latLong variable inside return object
+- import { ACTION_TYPES, StoreContext } from '../pages/_app'; onto hooks/user-track-location.js file
+- const { dispatch } = useContext(StoreContext); //fetching dispatch method from context store
+- use dispatch method inside success function of UserTrackLocation() function like this
+ dispatch({
+      type: ACTION_TYPES.SET_LAT_LONG,
+      payload: { latLong: `${latitude},${longitude}` },
+    });
+- let checkout the result on the browser by click on browser Components tab, click on MyApp component, click on Context.Provider to view the latLong property in the context store like this 
+state:{coffeeStores: Array(0), latLong: ""}
+- click on View stores nearby button to change the context store state from this 
+state:{coffeeStores: Array(0), latLong: ""} 
+to this 
+state:{coffeeStores: Array(0), latLong: "6.4351,3.416"}
+above we can see that latLong is dispatching onto context store.
+
+Use Context store in index.js file in place of local useState() 
+- import { ACTION_TYPES, StoreContext } from '../pages/_app'; onto index.js 
+- use the useContext() react hook method inside Home component like this
+const { dispatch } = useContext(StoreContext); //fetching dispatch method from context store
+
+Coffee Store Page for Non-SSG Routes
+when means rendering individual coffee store page by clicking on View coffee store near me button.
+- open pages/coffee-store/[id].js file to use coffeeStore data store in context store
+- for the individual coffee stores in View stores nearby to work we must change from this
+const { name, location, imgUrl } = coffeeStore; in [id].js file to 
+const { name, address, locality, imgUrl } = coffeeStore; and its usage in the [id].js file
+- we must also change the object return by fetchCoffeeStores() method in pages/lib/coffee-store.js file from this 
+ return {
+   ...result,
+   imgUrl: photos[id],
+  };
+to this   
+  return {
+      fsq_id: result.fsq_id,
+      name: result.name,
+      address: result.location.formatted_address || '',
+      locality: result.location.locality || '',
+      imgUrl: photos[id],
+    };
+becos on [id].js can not access location.formatted_address and location.locality properties 
+- import { StoreContext } from '../_app'; onto [id].js file 
+- use StoreContext inorder to fetch coffteeStores data from context store like this
+const {
+    state: { coffeeStores },
+  } = useContext(StoreContext); //fetching coffeeStores
+- create id variable in CoffeeStore component of [id].js file like this
+const id = router.query.id; //getting id from the browser url
+- use useEffect() react hook method to render either coffee stores from getStaticProps() or context store.
+- let go to browser Components tab, click on MyApp->StoreProvider->Context.Provider->CoffeeStore to view the individual coffee store object properties 
+
+API (Application Programming Interface)
+			API (Application Programming Interface)
+					|
+				    some URL
+				mycoolwebapp.com/ <path>
+					|
+			   Client   ---Request--->    Server
+				(HTTP GET, POST, etc)	
+			   Client  <--- Response---   Server		
+					(JSON)       example, Unsplash, Foursquare
+- Api is a block of codes that enable website and webapp to talk or communication with one and other in form of data.
+- Api is a url or route that return json format data.
+- We use unsplash and foursquare api, these apis return json format data that is integrate onto our web application. Both apis also give us documentation on how to use there api as well.
+- Api uses a standard called REST (REpresentational State Transfer) 
+- REST Api is refer to use HTTP protocol (GET, POST, PUT, DELETE) to fetch, store, update and delete resources on the server. 
+- REST Api is a way of manipulate web resources using HTTP methods such as GET, POST, PUT, DELETE.
+- How to implement REST API 			
+		   types of operation to perform
+/api/coffee-stores	--- HTTP POST ---> 	create coffee stores (store data)
+/api/coffee-stores	--- HTTP GET ---> 	get a list of coffee stores (fetch data) its the default method
+/api/coffee-stores/1	--- HTTP GET ---> 	get coffee stores by ID
+/api/coffee-stores/1	--- HTTP PUT ---> 	update coffee store by ID
+/api/coffee-stores/1	--- HTTP DELETE---> 	delete a coffee store by ID
+- google search https://nextjs.org/docs/api-routes/introduction to see more about API routes
+- pages/api folder that is where we have our backend code which are apis, so any request you want to  make to database you can write it inside pages/api folder.
+- pages/coffee-store, pages/lib, pages/_app.js, pages/index.js and pages/_document.js are frontend code 
+- this is why next.js is called Hybrid framework becos you can write both server side code and client side code inside one code base or component.
+
+What are Serverless Functions?
+API routes are usually deploy as a serverless function also known as Lander function.
+Serverless function means that the developer is not responsible for setup or manager the server infrastructure. What the developer need to wrong about is the business logic of the app while the server logic has been taking care for us by the cloud providers. Serverless setting up and management is done by cloud providers which includes Vercel, Netlify, Amazon Web Services, Microsoft Azure, Google, etc
+
+How serverless function works 
+User make request -->Event has occurred --> Serverless function --> Start wakes up and starts server
+					     (Server is sleeping)			|
+						/api/hello				|
+						    |			   /api/hello executing
+						    |					|
+						server shutsdown			|
+						    |			    /api/hello execution 							    |	  <---------	    complete 
+With the above illustration serverless function is start when user make request and once the request is completed its automatically shutdown the server.
+- with serverless function you doesn't need to employee more developer to handle you server side becos the cloud providers will take of that and developers focus more on the business logic that return more business value.
+
+API routing with Next.js
+- if you remember any file in pages folder can be route to on the browser address bar becos we are using file system routing 
+- let rout to page/app/hello.js on the browser like this 
+http://localhost:3000/api/hello its return this json format data becos an api has been pre-config for us by Next.js 
+{
+  "name": "John Doe"
+}
+- the code inside pages/api/hello.js file is an example of api 
+
+Rules of API routes
+1. File needs to be a function.
+2. Function needs to be exported by default.
+3. Every function should be it's own file.
+
+Cloud Computing Services:
+1 Infrastructure as a Service (IaaS) commonly referred to as simply “IaaS,” is a form of cloud computing that delivers fundamental compute, network, and storage resources to consumers
+2 Platform as a Service (PaaS) as the name suggests, provides you computing platforms which typically includes operating system, programming language execution environment, database
+3 Software as a Service (SaaS) allows each user to access programs via the internet, instead of having to install the software on the user's computer. SaaS has many business applications, including file sharing, email, calendars
+4 Functions as a Service (FaaS) is a way of using a serverless application where the setting and managing of server is do by the cloud provider and the developer focus more on building business logic inorder to return busines value.
+
+Catch All Routes in Next.js
+1. index routes -> default root page route
+2. nested routes -> nested files in pages folder e.g /coffee-store, api/hello
+3. dynamic routes -> /coffee-store/[id] or /coffee-store/5a00408c6dcf042d1ae13661
+4. catch all routes -> /coffee-store/[...all]
+index, nested and dynamic routes they all have high piority then catch all route
+
+Create a Serverless Function for Getting Coffee Store
+- delete hello.js file from pages/api folder 
+- we want to replace const fetchedCoffees = await fetchCoffeeStores(latLong, 30); from lib/coffee-stores.js file with serverless function inside the pages/index.js file
+- create getCoffeeStoresByLocation.js inside pages/api folder
+- copy const fetchedCoffees = await fetchCoffeeStores(latLong, 30); from useEffect() method in index.js file to getCoffeeStoresByLocation() function
+- import { fetchCoffeeStores } from '../lib/coffee-stores'; onto getCoffeeStoresByLocation.js file
+- setup getCoffeeStoresByLocation.js file
+- checkout this nest route api like this 
+http://localhost:3000/api/getCoffeeStoresByLocation?latLong=6.5,3.3&limit=30
+its return list of coffee stores array of object
+- let use the serverless function created in pages/api/getCoffeeStoresByLocation.js file in pages/index.js file as a nest api route like this
+const fetchedCoffees = await fetch(`/api/getCoffeeStoresByLocation?latLong=${latLong}&limit=30`);
+const coffeeStores = await fetchedCoffees.json();
+- change the dispatch() method from this 
+dispatch({ type: ACTION_TYPES.SET_COFFEE_STORES,
+            payload: { coffeeStores: fetchedCoffees },
+          });
+to this 
+dispatch({type: ACTION_TYPES.SET_COFFEE_STORES,
+            payload: { coffeeStores },
+         });
+
+Serverless Function inside getStaticProps() method 
+- You should not fetch an API route from getStaticProps - instead, you can write the server-side code directly in getStaticProps becos getStaticProps() method it is fetched or called at build time when all the js file is converted to HTML page inorder to render on the browser and other startup server process also take place as well.
+- we will be write the api code directly inside getStaticProps() method which is the server-side like this 
+const coffeeStores = await fetchCoffeeStores(); from lib folder
+and we shall use nested api route in the client side like this 
+const fetchedCoffees = await fetch(`/api/getCoffeeStoresByLocation?latLong=${latLong}&limit=30`);
+const coffeeStores = await fetchedCoffees.json();
+
+Project Architecture
+- below is the architectural structure of our project.
+
+		  Coffee Stores Project
+
+	Banner				next/image		   SSG: Static site regeneration
+								   CSR: Client Side Rendering
+				
+	Coffee stores near me
+				       (Dynamically generate 30 coffee store based on user location)
+	Title 		Title 		Title 	<---CSR-- fetch('/api/getCoffeeStoresByLocation')
+	Image		Image		Image
+
+	Lagos Coffee stores 
+									(6 coffee stores)
+	Title 		Title 		Title 	<---SSG-- export async function getStaticProps()
+	Image		Image		Image
+
+			HOME PAGE
+- we create Context store inorder to pass data from one page or component to another. Context store save its data on the browser that is why we call the 30 coffee stores rendered by click on the View stores nearby button a Client Side Rendering becos the data rendered is coming from the browser.
+
+				Coffee Store
+					|
+				getStaticProps
+					|
+				-------- --------
+				|		|
+		SSG		|		|          CSR
+	--props.coffeeStore-----		-----Context(StoreContext)
+	|							| |
+	|							| |
+	-------------------------|---context.coffeeStores.find--| |--no coffee stores ----
+	Onike Stores		 |	Rehoboth Restore		in context?	 |
+				 |							 |
+				 |						   CSR	 |		
+	__________________________________________				     Airtable 
+	|				          |					 |	
+	| Button			          |					 |
+	| 				          | <--------------- store coffee stores in db
+	| Title    (Rendering 30 coffee stores    |
+	| Image	    from context store)           |
+	|_________________________________________|
+	         Coffee Store Page
+
+- With the above illustration of our project, we have to introduce Airtable onto the Coffee Store app becos when you click on View stores nearby button, its render all the coffee stores near by based on Location latLong
+- click on any coffee store its render an individual coffee store but when you refresh the page its throw an error becos the context store is not persistent.
+- As a result of non-persistent of context store we shall introduct Airtable to persist our data.
+- What is Airtable 
+Airtable - the power of a database with the familiarity of a spreadsheet.
+Airtable - allow us to view our content in form of spreadsheet.
+- google search airtable.com
+* click on Sign up for free
+* click on Sign with Google button 
+* click on Skip or Continue button
+* click on Start building button
+* click on the dropdown button select Everyone and click on Continue button
+* click on Product catalog and click on Continue button 
+
+Setup Airtable
+- click on Airtable logo to go to Home page of Airtable.
+- click on Start from scratch
+- add discover-coffee-stores title onto the base 
+- let rename Table1 to coffee-stores-table
+- let delete all the fields expect primary field or primary key field
+- right click on Name primary field, click on Customize field type 
+- change Name field to id and go to Find a field type then select Single line text then click on Save button
+- let create the other fields which are as follows with their data types;
+name : Single line text,
+address : Single line text, 
+locality : Single line text, 
+voting: integer(2) with default value of 0,
+imgUrl : Long text
+- let look at the developer api that will be use to querying this specific table by going to airtable.com/developers
+- click on REST API (API DOCS) -->
+- click on discover-coffee-stores to view api document of Airtable 
+
+API Architecture: Coffee Store Page
+- we shall create the following api
+* /createCoffeeStore -> to store coffee store onto Airtable table
+* /getCoffeeStoreById -> to fetch coffee store from Airtable db
+* /favouriteCoffeeStoreById -> to vote for favourite coffee store
+- Our app using Hybrid rendering approach becos the 6 coffee stores are render from getStaticProps  while the other 30 coffee stores rendered by clicking on View coffee store nearme button is rendering from client side becos its rendering from context store which is inside the browser and this is what we are use to while use react hook.
+
+Airtable Library
+- At the Official API client selection click on JavaScript: airtable.js (Node.js + browser)
+- let install airtable as a dependency like this
+C:\ComputerD\next-discover-coffee-store042022> npm install airtable
+
+RATE LIMITS
+click on RATE LIMITS in the side bar to view this 
+The API is limited to 5 requests per second per base. If you exceed this rate, you will receive a 429 status code and will need to wait 30 seconds before subsequent requests will succeed.
+
+Generate Airtable API Key
+- click on AUTHENTICATION 
+- click on account page on the AUTHENTICATION page
+- click on Generate API key and copy the generated api key
+
+Integrate Airtable onto our Coffee Store table
+- create createCoffeeStore.js file in pages/api folder becos api folder is the server folder and api is created in server side and use in the frontend or client side.
+- go back to airtable website click on JavaScript tab then scrolldown to create records section then copy this code and past in createCoffeeStore.js file
+
+var Airtable = require('airtable');
+var base = new Airtable({apiKey: 'YOUR_API_KEY'}).base('appsKrtMi9J5nPEF3');
+- use the generated apiKey in the above code.
+- change var keyword to const keyword
+- next is to put our apiKey and baseKey in .evn file then use the variable in createCoffeeStore.js 
+- restart the app since we made changing in .env
+
+Basic Coffee Store API/Serverless function
+- let create createCoffeeStore() basic api function like this
+	const createCoffeeStore = (req, res) => {
+  	   res.json({ message: 'Hi there' });
+	};
+	export default createCoffeeStore;
+- do console.log({ table }); and use this api route or url to query the table on the browser address bar http://localhost:3000/api/createCoffeeStore
+its return this object with properties and methods on the browser and on vscode terminal as well
+{
+  "message": "Hi there"
+}
+{
+  table: Table {
+    _base: Base { _airtable: Airtable {}, _id: 'appsKrtMi9J5nPEF3;' },
+    id: null,
+    name: 'coffee-store-table',
+    find: [Function (anonymous)],
+    select: [Function: bound ],
+    create: [Function (anonymous)],
+    update: [Function (anonymous)],
+    replace: [Function (anonymous)],
+    destroy: [Function (anonymous)],
+    forEach: [Function (anonymous)]
+  }
+}
+- printing req object inside createCoffeeStore() serverless function inorder to view that the default req methods is GET like this 
+const createCoffeeStore = (req, res) => {
+  console.log({ req });
+  if (req.methods === 'POST') {
+    res.json({ message: 'Hi there' });
+  } else {
+    res.json({ message: 'method is GET' });
+  }
+};
+- the browser cannot change the default req methods from GET to POST inorder for us to insert data onto Airtable as a result of that we need to use Postman to test our createCoffeeStore api route 
+- let open Postman and go back to our browser to copy this url http://localhost:3000/api/createCoffeeStore 
+- past the copied url onto Enter request URL in postman and change the methods to POST then click Send button
+- its return this object 
+{
+    "message": "Hi there"
+}
+- then go back and check the req object on your vscode, executing postman has change it from it from this method: 'GET', to method: 'POST'.
+- what we want is that for the client side to be able to use /api/createCoffeeStore api route inorder to store data onto Airtable.
+
+API Design: Create Coffee Store
+- what we want is that anytime will call nested api route /api/createCoffeeStore  in the frontend we want to create a record or row onto the Airtable db.
+
+Let look at Create Coffee Store API Design
+
+/api/createCoffeeStore 
+	id							don't create a store but
+	votes							just return that store
+	name							        /	
+	neighbourhood						       /	
+	address							     YES
+	imgUrl							     /
+	|							    /
+	|_____________________Find if this id exist --------> AirtableDB 
+								    \	
+								     \
+								     NO
+								       \
+									\ 
+ 								 create that store
+- there are two pieces in the API Design
+1. find if the id exist in Airtable then return the coffee store 
+2. create or insert coffee store in Airtable db if it does not exist
+
+Find Coffee Store API
+- let view the documentation of list firstPage method on this page https://airtable.com/appsKrtMi9J5nPEF3/api/docs#javascript/table:coffee-store-table:list
+inorder to find if the record exist first then use this prefined list firstPage method
+- add finding record in Airtable DB onto pages/api/createCoffeeStore() api function
+- open postman to test this api route http://localhost:3000/api/createCoffeeStore with POST method
+its return []
+- go to https://airtable.com/appsKrtMi9J5nPEF3/tblWuTkhBfXhJs2wF/viwq1rpbQvWTEyWGD?blocks=hide
+- manually insert record like this
+id	name			addres				locality	voting	imgUrl
+0	Khadijat Coffee Store	51B, Okepopo Street, Lagos	Lagos Island	10	http://image
+- - use postman to re-test this api route http://localhost:3000/api/createCoffeeStore with POST method
+its return the manually input record like this 
+[
+  {
+    {
+        "_table": {
+            "_base": {
+                "_airtable": {},
+                "_id": "appsKrtMi9J5nPEF3"
+            },
+            "id": null,
+            "name": "coffee-store-table"
+        },
+        "id": "recyIvcHf4A7VZ6l8",
+        "_rawJson": {
+            "id": "recyIvcHf4A7VZ6l8",
+            "createdTime": "2022-05-19T10:17:29.000Z",
+            "fields": {
+                "locality": "Lagos Island, Lagos ",
+                "name": "Khadijat Coffee Store",
+                "voting": 10,
+                "imgUrl": "http://image.com",
+                "address": "51B, Okepopo Street, Lagos",
+                "id": "0"
+            }
+        },
+        "fields": {
+            "locality": "Lagos Island, Lagos ",
+            "name": "Khadijat Coffee Store",
+            "voting": 10,
+            "imgUrl": "http://image.com",
+            "address": "51B, Okepopo Street, Lagos",
+            "id": "0"
+        }
+    }
+]
+
+Airtable Docs: Create Coffee Store
+- let view the documentation of create record in Airtable DB on this page https://airtable.com/appsKrtMi9J5nPEF3/api/docs#javascript/table:coffee-store-table:retrieve
+- use the create record in Airtable docs on the else block of pages/api/createCoffeeStore() api function like this
+const createRecord = await table.create([
+        {
+          fields: {
+            id: '1',
+            name: 'Africa Coffee',
+            address: 'Lagos Mainland',
+            locality: 'Lagos',
+            voting: 20,
+            imgUrl: 'http://image.com',
+          },
+        },
+      ]);
+      res.json({ message: 'create a record', record: createRecord }); //return create a record
+    }
+- change the record id from filterByFormula: `id="0"`, to filterByFormula: `id="1"`,
+- go to browser address bar to add this url http://localhost:3000/api/createCoffeeStore
+its return success case 
+- go to Airtable on this url to view the newly inserted record 
+https://airtable.com/appsKrtMi9J5nPEF3/tblWuTkhBfXhJs2wF/viwq1rpbQvWTEyWGD?blocks=hide
+- with the above block of codes we manually inserted a record
+
+Dynamic Insertion of Record on Airtable database
+- let add new record from postman by clicking on Body, select row radio button, choice JSON format
+- add this record onto postman body
+{
+            "id": "5",
+            "name": "New Africa Coffee",
+            "address": "New Lagos Mainland",
+            "locality": "New Lagos",
+            "voting": 30,
+            "imgUrl": "http://newimage.com"
+        }
+- back createCoffeeStore api function to access the data pass onto fields object in postman body right before if(req.method === "POST"){}
+like this  const { id, name, address, locality, voting, imgUrl } = req.body;
+- change static id from this filterByFormula: `id="4"`, to dynamic id to this
+filterByFormula: `id=${id}`,
+- change the static fields object properties from this 
+fields: {
+            id: '4',
+            name: 'Africa Coffee',
+            address: 'Lagos Mainland',
+            locality: 'Lagos',
+            voting: 20,
+            imgUrl: 'http://image.com',
+          },
+to this 
+fields: {
+            id,
+            name,
+            address,
+            locality,
+            voting,
+            imgUrl,
+          },
+- let go back to postman to change the method to GET and click on Send button
+- check the record inside Airtable db
+
+API Error Handling
+- adding a validation to check if id and name contain value
+- add this if statement onto the else block of createCoffeeStore() api function like this 
+ if (id && name) {
+        const createRecord = await table.create([
+          {
+            fields: {
+              id,
+              name,
+              address,
+              locality,
+              voting,
+              imgUrl,
+            },
+          },
+        ]);
+
+        //its return only fields object to client side
+        const record = createRecord.map((record) => {
+          return {
+            ...record.fields,
+          };
+        });
+        res.json({ message: 'created a record', record });
+      } else {
+        res.status(400);
+        res.json({ message: 'id or name is missing' });
+      }
+    }
+- back to postman to test the api to trigger the error message by inputing this data
+{
+            "id": "5",
+            "name": "",
+            "address": "New Lagos Mainland",
+            "locality": "New Lagos",
+            "voting": 30,
+            "imgUrl": "http://newimage.com"
+        }
+and make sure the req method is GET click on Send button 
+- its trigger this error message 
+{
+    "message": "id or name is missing"
+}
+- remove the id inside the else block of creating a record from this
+ if (id && name) {}
+to this 
+ if (name) {}
+- add the if(id){} right before if (req.method === 'POST') {}
+- copy all the code inside if(req.method==='POST'){} with its else{} block onto the newly create if(id){} statement.
+
+Refactor Create Coffee Store API
+- remove all console.log() method and unecessary comment inside createCoffeeStore api function
+- create airtable.js file inside lib folder 
+- copy and past the Airtable imported library file onto airtable.js file like this 
+const Airtable = require('airtable');
+// const base = new Airtable({
+//   apiKey: process.env.AIRTABLE_API_KEY,
+// }).base(process.env.AIRTABLE_BASE_KEY);
+const base = new Airtable({ apiKey: 'key89S9nrS4b4vWCU' }).base(
+  'appsKrtMi9J5nPEF3'
+);
+- copy and past this block of codes onto airtable.js file like this
+const records = findCoffeeStoreRecords.map((record) => {
+            console.log({ record });
+            return {
+              ...record.fields,
+            };
+          });
+- then convert the above block of code onto getMinifiedRecords function inside airtable.js like this 
+export const getMinifiedRecords = (records) => {
+  return records.map((record) => getMinifiedRecord(record));
+};
+- import { table, getMinifiedRecords } from '../lib/airtable';onto pages/api/createCoffeeStore.js file 
+- use getMinifiedRecords() function right before the else block for creating a record  inside pages/api/createCoffeeStore.js file like this 
+	if (findCoffeeStoreRecords.length !== 0) {
+          const records = getMinifiedRecords(findCoffeeStoreRecords);
+          res.json(records);
+        }
+- use getMinifiedRecords() function right inside the else code for create a record like this 
+ const record = getMinifiedRecords(createRecord); 
+- remove all the records in Airtable db 
+- open postman to insert new record onto Airable db by clicking body, click on raw then select JSON format and setup the fields object 
+- the insertion is a success case.
+- let the find method by leaving just only the {"id":"0"} in the body and click on Send button
+- its also return success case.
+- let try to fetch id that does not exist using postman again
+its return { "message": "id or name is missing"} which is correct.
+
+API Architecture: Invoke Coffee Store API in client side
+- when you click on View stores nearby button its render the coffee stores near a user based on the location and all the rendered coffee stores are coming from context store.
+- when click on individual coffee stores in Coffee stores near me section its render the individual store from context store, when sharing that individual coffee store link or url with a friend or refresh the individual coffee store its return error becos context store is not persistent data.
+- let go over the API Architecture Design once again to know when to invoke createCoffeeStore api route in the app
+- we shall invoke createCoffeeStore api route when user click on any individual coffee store in the Coffee Stores near me section as the clicked store render on browser we then store the properties of coffee store onto Airtable db.
+- open pages/coffee-store/[id].js file to implement createCoffeeStore api route 
+- create handleCreateCoffeeStore function right before useEffect() method inorder to handle creating coffee store in the Airtable db.
+- let look at fetch() method documentation inorder to use fetch() with req method POST and also pass data onto fetch()method as well by going to 
+developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+scrolldown to Uploading JSON data section of the fetch documentation
+- inside useEffect() method change this variable from this findCoffeeStoreById to this coffeeStoreFromContext
+- use handleCreateCoffeeStore() function inside useEffect() method
+- let check out the result of implement createCoffeeStore api route in [id].js
+- let checkout Airtable, its create 2 same record at a time
+- to fix the above issue open next.config.js file, change reactStrictMode: true, to
+reactStrictMode: false,
+- restart the server then insert another record to see that the issue have been fixed.
+
+Create Coffee Store for Statically Generated Route
+- let click on any one of the statically generated route then refresh it, its renderd again becos its as automatically prerender or prefetch by nextjs so we dont need to store it in the Airtable db.
+- but becos we want the users to click on Up vote button and increase the number of vote so we have to persist the Static rendered coffee store onto Airtable as well. 
+- our app is hybrid rendering both we render 6 coffee store statically and the other 30 stores are rendered from both context store and Airtable.
+- inorder to store the static rendered coffee store onto AirtableDB add else block to this if (isEmpty(props.coffeeStore)) {} statement in useEffect() react hook method like this
+ } else {
+  //SSG
+  handleCreateCoffeeStore(props.coffeeStore); 
+ }
+- the above store the static rendered or getStaticProps() coffee store  onto Airtable.
+- let checkout on the browser by clicking on any statically rendered coffee store
+
+SWR Design
+- The name SWR is derived from "stale-while-revalidate". Its build by vercel.
+- Let google search swr.vercel.app for more information.
+SWR is a strategy to first return the data from cache (stale), then send the fetch request (revalidate), and finally come with the up-to-date data. 
+
+Voting Feature Design
+- open pages/coffee-store/[id].js to implement voting property.
+- add const [votingCount, setVotingCount] = useState(0); right after 
+const [coffeeStore, setCoffeeStore] = useState(props.coffeeStore);
+- use setVotingCount() function in handleUpvoteButton function 
+- use votingCount variable in return selection from <p className={styles.text}>1</p> to
+<p className={styles.text}>{votingCount}</p>
+- let checkout the result on the browser by clicking on Up Vote! button, its will increase the vote number as user click on the button.
+- let create a serverless function getCoffeeStoreById nest api route inorder to fetch a specific coffee store from Airtable
+- create getCoffeeStoreById.js file in pages/api folder 
+- open postman to test the api with this url http://localhost:3000/api/getCoffeeStoreById?id=5a00408c6dcf042d1ae13661
+- its return 
+{
+    "message": "id is fetched 5a00408c6dcf042d1ae13661"
+}
+- let remove the id from the api, then it return 
+{
+    "message": "Id is missing"
+}
+
+Coffee Store By Id API Validation
+- copy the fetching of coffee store part in createCoffeeStore api and past it in getCoffeeStoreById api route
+- let checkout the result on postman by testing the api again with this endpoint
+http://localhost:3000/api/getCoffeeStoreById?fsq_id=5fe346b0a6930e53eae018d8
+its return this output
+{
+    "records": [
+        {
+            "locality": "Lagos",
+            "name": "Tea & Coffee Spot",
+            "voting": 0,
+            "imgUrl": "https://images.unsplash.com/photo-1464869372688-a93d806be852?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjY5MzF8MHwxfHNlYXJjaHw1fHxjb2ZmZWUlMjBzdG9yZXN8ZW58MHx8fHwxNjUzNDk5Nzk1&ixlib=rb-1.2.1&q=80&w=400",
+            "address": "10 Adeniran Ogunsanya (Surulere), Lagos, Lagos",
+            "fsq_id": "5fe346b0a6930e53eae018d8"
+        }
+    ]
+}
+- let try fetching data with wrong fsq_id using postman as well.
+its return 
+{
+    "message": "id could not be found"
+}
+
+Refactor Coffee Store By Id API 
+- since we copy findCoffeeStoreRecords block of code from createCoffeeStore.js to getCoffeeStoreById.js file.
+- let create a function that can be reuse to handle fetch coffee store which can then be use by both createCoffeeStore and getCoffeeStoreById nest api route and some other api as well.
+- open airtable.js file to create findRecordByFilter function to handle fetching of record from AirtableDB.
+- let copy this block of codes 
+const findCoffeeStoreRecords = await table
+        .select({
+          filterByFormula: `fsq_id="${fsq_id}"`,
+        })
+        .firstPage();
+
+      if (findCoffeeStoreRecords.length !== 0) {
+        const records = getMinifiedRecords(findCoffeeStoreRecords);
+
+        console.log('findRecord: ', { records });
+from getCoffeeStoreById.js file to use inside findRecordByFilter function
+- restructure the block of codes in findRecordByFilter function
+- export findRecordByFilter function and use it in getCoffeeStoreById.js and createCoffeeStore.js file like this 
+const records = await findRecordByFilter(fsq_id); //from airtable.js file
+      if (records.length !== 0) {
+        console.log('findRecord: ', { records });
+        res.json({ records });
+   }
+- let checkout the result with postman again 
+its return success case
+- let copy this 
+const records = await findRecordByFilter(fsq_id); //from airtable.js file
+      if (records.length !== 0) {
+        console.log('findRecord: ', { records });
+        res.json({ records });
+      }
+from getCoffeeStoreById.js file to modify createCoffeeStore.js file from this 
+ const findCoffeeStoreRecords = await table
+   .select({
+       filterByFormula: `fsq_id="${fsq_id}"`,
+    })
+     .firstPage();
+
+    if (findCoffeeStoreRecords.length !== 0) {
+          const records = getMinifiedRecords(findCoffeeStoreRecords);
+
+          console.log('findRecord: ', { records });
+           res.json({ records });
+    }
+to this 
+const records = await findRecordByFilter(fsq_id); //from airtable.js file
+   if (records.length !== 0) {
+       console.log('findRecord: ', { records });
+       res.json({ records });
+   }
+- import { findRecordByFilter } from '../lib/airtable';
+- let checkout the resturcturing of the codes by clicking on already existing coffee store from the user interface 
+
+What is SWR (Stale While Revalidate)?
+SWR -> Its allow you to fetch cache and refetch data in realtime. It is one of the React Hooks library for remote data fetching.
+- SWR works with three main steps 
+1. whenever you invoke or make api call its return data cache (Stale)
+2. send the specific request 
+3. its then finally render update data on the screen, once the screen is on focus means when you click on the screen its return the updated data
+- let go back to swr.vercel.app to see the usage of the SWR library
+- let install swr liket this 
+C:\ComputerD\next-discover-coffee-store042022> npm install swr@1.3.0
+- back to coffee-store/[id].js file to use the installed swr library
+- import useSWR from 'swr'; onto coffee-store/[id].js file 
+- let use it right after votingCount variable like this 
+const { data, error } = useSWR(`/api/getCoffeeStoreById?fsq_id=${fsq_id}`, fetcher);
+const fetcher = (url) => fetch(url).then((res) => res.json());
+- create another useEffect() react hook method to update voting property in coffee store object.
+- handle the error part below the useEffect()
+- let print SWR on the console like this console.log('data from SWR', data); 
+
+API Design for favourtCoffeestoreById api 
+
+/api/favouriteCoffeeStoreById 
+	id							update voting field of the 
+	|							current coffee store object
+	|							        /	
+	|						               /	
+	|							     YES
+	|							     /
+	|							    /
+	|_____________________Find if this id exist --------> AirtableDB 
+								    \	
+								     \
+								     NO
+								       \
+									\ 
+ 								  Error message: Id 
+								  doesn't exist
+ 
+Airtable Docs: for updating data
+- let go to this url 
+https://airtable.com/appsKrtMi9J5nPEF3/api/docs#javascript/table:coffee-store:update 
+to view how to use Airtable update() method.
+
+Setup favouriteCoffeeStoreById Api
+- create favouriteCoffeeStoreById.js file in pages/api folder
+- open Postman to test this api http://localhost:3000/api/favouriteCoffeeStoreById its render 
+{
+    "message": "this works"
+}
+- change req.method == "PUT" and retest again in Postman
+- add this object onto Postman body then click send button  
+{
+    "fsq_id": "3333000"
+} 
+its return this object
+{
+    "message": "this works 3333000",
+    "fsq_id": "3333000"
+}
+- the main functionality of this api is to update voting property of the coffee store object Otherwise throw error
+- setup favouriteCoffeeStoreById serverless function
+- import { findRecordByFilter } from '../lib/airtable'; onto pages/api/favouriteCoffeeStoreById.js
+for use.
+- let test the nest api route again on Postman by copy the real fsq_id from Airtable onto the body of Postman like this 
+{
+    "fsq_id": "5d42b185747d300008416aea"
+}
+its return success case 
+- let go the this url 
+https://airtable.com/appsKrtMi9J5nPEF3/api/docs#javascript/table:coffee-store:update
+to view the Airtable update documentation 
+- we need a record Id from AirtableDB as a result let modify getMinifiedRecord function from airtable.js file from this 
+const getMinifiedRecord = (record) => {
+  console.log('recordID', record);
+  return {
+    ...record.fields,
+  };
+};
+to this
+const getMinifiedRecord = (record) => {
+  console.log('recordID', record);
+  return {
+    recordId: record.id,
+    ...record.fields,
+  };
+};
+- let test the api with Postman 
+- its return success case.
+
+Integrate favouriteCoffeeStoreById api with client side 
+- open pages/coffee-store/[id].js file to implement favouriteCoffeeStoreById api.
+- use favouriteCoffeeStoreById nest api inside handleUpvoteButton() function
+- once user click on Up Vote! button its increase the vote both on the UI and in the airtable.
+- comment or remove all the console.log() in the app.
+
+What is Deployment?
+- Deployment means placing our locally developed app onto public place like internet by using Cloud Providers such as Vercel built Next.js framework, Netlify, Heroku, etc
+- We shall be deploying our app onto Vercel and Netlify 
+- check your package.json file in the scripts object you will see lint has being configure for you like this "lint": "next lint"
+- let run lint inorder to output warning and error in our code like this
+C:\ComputerD\next-discover-coffee-store042022> npm run lint
+
+					Next.js App
+			____________________|____________________
+			|					|
+			|					|
+		______________				________________
+		| npm run dev |				| npm run build|
+		______________				_______________
+		Development Server			  	|
+		(on localhost:3000)				|
+							________________
+							| npm run start |
+							_________________
+							Production Server
+							(on some URL on the internet like 							this https://coffeestore.com)
+- let run npm run build to get our app deploy like this 
+C:\ComputerD\next-discover-coffee-store042022> npm run build
+- the above command throw this error message 
+Build optimization failed: found pages without a React Component as default export in
+pages/lib/coffee-stores
+pages/lib/getListOfCoffeeStorePhotos
+pages/lib/airtable
+- to fix move lib folder to the root folder 
+- leave this file inside pages/lib/coffee-stores
+- change the path of all the files that is reference the content of lib folder
+- startup npm run dev server to see that the app is rendering correctly.
+- run C:\ComputerD\next-discover-coffee-store042022> npm run build
+- its generate compiled folders onto .next folder 
+-  C:\ComputerD\next-discover-coffee-store042022> npm run start
+the above command will server-up the compiled code in the local server port 3000
+
+						Cloud ready app
+						|
+		______________________________________________________________________
+		|		     |			|			      |	
+	code is uploaded	Environment 	Environments are separate 	Has necessary
+	on version control	Variables	for dev & prod			servers
+	Github, Gitlab		.env.local					run React & Nodejs
+				to be configured				code
+
+Create a Github Repository and Push Your Code 
+- open remote Github to create new Repository 
+- click on New button to create new Repository
+- Repository name: discovery-coffee-stores
+- select Public
+- click on Creating repository
+- copy the url of your github repository like this
+git@github.com:greaterheightscomputer/discovery-coffee-stores.git
+- back to vscode to initialize git repository like this 
+C:\ComputerD\next-discover-coffee-store042022> git init
+
